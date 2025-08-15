@@ -5,26 +5,20 @@
 @endsection
 
 @section('content')
-    <h1 class="mb-4" style="font-size:x-large">Manajemen Artikel</h1>
+    <h1 class="mb-4" style="font-size:x-large">Manajemen Informasi</h1>
     <hr><br>
 
     <div class="row">
         <div class="col-md-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                {{-- Form Pencarian dan Filter Status --}}
-                <form action="{{ route('admin.informasi.index') }}" method="GET"
-                    class="d-flex me-3">
+                {{-- Form Pencarian --}}
+                <form action="{{ route('admin.informasi.index') }}" method="GET" class="d-flex me-3">
                     <input type="text" name="search" class="form-control form-control-sm me-2"
-                        placeholder="Cari Judul Artikel..." value="{{ request('search') }}">
-                    <select name="status" class="form-select form-select-sm me-2" style="max-width: 150px;">
-                        <option value="">Semua Status</option>
-                        <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Published</option>
-                        <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Draft</option>
-                    </select>
+                        placeholder="Cari Informasi..." value="{{ request('search') }}">
                     <button type="submit" class="btn btn-sm btn-outline-secondary">
                         Cari
                     </button>
-                    @if (request('search') || request('status') !== null)
+                    @if (request('search') !== null)
                         <a href="{{ route('admin.informasi.index') }}" class="btn btn-sm btn-outline-danger ms-2">
                             Reset
                         </a>
@@ -32,75 +26,63 @@
                 </form>
 
                 <a href="{{ route('admin.informasi.create') }}" class="btn btn-sm btn-primary px-3">
-                    <i class="fas fa-plus me-1"></i> Tambah Artikel
+                    <i class="fas fa-plus me-1"></i> Tambah Informasi
                 </a>
             </div>
 
             @if ($informasi->isEmpty())
                 <div class="alert alert-warning text-center" role="alert">
-                    Tidak ada artikel yang ditemukan.
+                    Tidak ada informasi yang ditemukan.
                 </div>
             @else
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover small">
-                        <thead>
-                            <tr class="text-center bg-light">
-                                <th>No.</th>
-                                <th>Judul Artikel</th>
-                                <th>Kategori</th>
-                                <th>Penulis</th>
-                                <th>Status</th>
-                                <th>Dibuat Pada</th>
-                                <th>Aksi</th>
+                <table class="table table-bordered table-striped small">
+                    <thead>
+                        <tr class="text-center">
+                            <th width="5%">No.</th>
+                            <th>Judul Informasi</th>
+                            <th width="20%">Status</th>
+                            <th width="20%">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($informasi as $val)
+                            <tr>
+                                <td class="text-center">
+                                    {{ $loop->iteration + ($informasi->currentPage() - 1) * $informasi->perPage() }}
+                                </td>
+                                <td>{{ $val->title }}</td>
+                                <td class="text-center">
+                                    @if ($val->status)
+                                        <span class="badge bg-primary">Published</span>
+                                    @else
+                                        <span class="badge bg-danger">Draft</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ route('admin.informasi.show', $val->slug) }}"
+                                        class="btn btn-sm btn-info text-white" title="Lihat">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{{ route('admin.informasi.edit', $val->slug) }}"
+                                        class="btn btn-sm btn-success">
+                                        <i class="fas fa-pencil"></i>
+                                    </a>
+                                    <form action="{{ route('admin.informasi.destroy', $val->slug) }}" method="POST"
+                                        class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Apakah Anda yakin ingin menghapus Informasi ini? Tindakan ini tidak dapat dibatalkan.')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($informasi as $val)
-                                <tr>
-                                    <td class="text-center">{{ $loop->iteration + ($informasi->currentPage() - 1) * $informasi->perPage() }}</td>
-                                    <td>
-                                        <a href="{{ route('admin.informasi.show', $val->slug) }}"
-                                            class="text-decoration-none">
-                                            {{ $val->title }}
-                                        </a>
-                                    </td>
-                                    <td>{{ $val->category->name }}</td>
-                                    <td>{{ $val->user->name }}</td>
-                                    <td class="text-center">
-                                        @if ($val->status)
-                                            <span class="badge bg-primary">Published</span>
-                                        @else
-                                            <span class="badge bg-danger">Draft</span>
-                                        @endif
-                                    </td>
-                                    <td class="text-center">{{ $val->created_at->format('d M Y H:i') }}</td>
-                                    <td class="text-center">
-                                        <a href="{{ route('admin.informasi.show', $val->slug) }}"
-                                            class="btn btn-sm btn-info text-white" title="Lihat">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <a href="{{ route('admin.informasi.edit', $val->slug) }}"
-                                                class="btn btn-sm btn-success mx-1" title="Edit">
-                                                <i class="fas fa-pencil"></i>
-                                            </a>
-                                            <form action="{{ route('admin.informasi.destroy', $val->slug) }}" method="POST"
-                                                class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger" title="Hapus"
-                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus Artikel ini? Tindakan ini tidak dapat dibatalkan.')">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
+                        @endforeach
+                    </tbody>
+                </table>
                 <div class="d-flex justify-content-end">
-                    {{ $informasi->links('pagination::bootstrap-4') }}
+                    {{ $informasi->appends(['search' => request('search')])->links('pagination::bootstrap-4') }}
                 </div>
             @endif
         </div>

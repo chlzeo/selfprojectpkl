@@ -65,8 +65,12 @@ class UserController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => ['required', 'string', 'max:15'],
             'gender' => ['nullable', Rule::in(['Laki-laki', 'Perempuan', 'Lainnya'])],
-            'role' => ['required', 'string', Rule::in(['admin', 'author', 'user'])],
+            'role' => ['required', 'string', Rule::in(['admin', 'sales', 'user'])],
             'image' => ['nullable', 'image', 'max:2048'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:100'],
+            'province' => ['nullable', 'string', 'max:100'],
+            'postal_code' => ['nullable', 'string', 'max:10'],
         ]);
 
         $imagePath = null;
@@ -85,6 +89,10 @@ class UserController extends Controller
             'instagram' => $request->instagram,
             'image' => $imagePath,
             'email_verified_at' => now(),
+            'address' => $request->address,
+            'city' => $request->city,
+            'province' => $request->province,
+            'postal_code' => $request->postal_code,
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil dibuat.');
@@ -137,6 +145,10 @@ class UserController extends Controller
             'gender' => ['nullable', Rule::in(['Laki-laki', 'Perempuan', 'Lainnya'])],
             'role' => ['required', 'string', Rule::in(['admin', 'author', 'user'])],
             'image' => ['nullable', 'image', 'max:2048'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:100'],
+            'province' => ['nullable', 'string', 'max:100'],
+            'postal_code' => ['nullable', 'string', 'max:10'],
         ];
 
         // Hanya tambahkan validasi password jika field password diisi
@@ -172,6 +184,10 @@ class UserController extends Controller
             'phone' => $request->phone,
             'instagram' => $request->instagram,
             'image' => $imagePath,
+            'address' => $request->address,
+            'city' => $request->city,
+            'province' => $request->province,
+            'postal_code' => $request->postal_code,
         ];
 
         // Update password hanya jika field password diisi

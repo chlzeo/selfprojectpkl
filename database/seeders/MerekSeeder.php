@@ -16,10 +16,10 @@ class MerekSeeder extends Seeder
     {
         $merek = ['Lamborghini', 'Ferari', 'Pagani', 'Toyota', 'Honda', 'Suzuki', 'Daihatsu', 'Mitsubishi', 'Nissan', 'Mazda'];
 
-        foreach ($merek as $merek) {
+        foreach ($merek as $mereks) {
             Merek::create([
-                'name' => $merek,
-                'slug' => Str::slug($merek),
+                'name' => $mereks,
+                'slug' => Str::slug($mereks),
             ]);
         }
     }

@@ -30,13 +30,15 @@ class ProductSeeder extends Seeder
                     'user_id' => $user->id,
                     'category_id' => $category->id,
                     'title' => $title,
+                    'sku' => null, // SKU bisa diisi nanti
                     'meta_desc' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
                     'slug' => Str::slug($title),
                     'content' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
                     'image' => null,
                     'status' => true,
                     'price' => rand(10000, 100000), // Generate random price
-                    'discount' => rand(0, 50) // Generate random discount percentage
+                    'discount' => rand(0, 50), // Generate random discount percentage
+                    'stock' => rand(1, 100), // Generate random stock quantity
             
                 ]);
             }

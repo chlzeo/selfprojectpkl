@@ -27,12 +27,10 @@ class InformasiSeeder extends Seeder
 
                 $title = "Sample Informasi " . $i . " - " . $category->name;
                 Informasi::create([
-                    'user_id' => $user->id,
-                    'category_id' => $category->id,
                     'title' => $title,
-                    'meta_desc' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+                    'meta_desc' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla exercitationem tenetur ad. Cum quo illum dolores dolore optio eius accusantium beatae incidunt repudiandae?',
                     'slug' => Str::slug($title),
-                    'content' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                    'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla exercitationem tenetur ad. Cum quo illum dolores dolore optio eius accusantium beatae incidunt repudiandae? Perspiciatis temporibus omnis, optio enim asperiores ducimus?',
                     'status' => true,
                 ]);
             }

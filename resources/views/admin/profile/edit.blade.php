@@ -5,37 +5,36 @@
 @endsection
 
 @section('content')
-    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
-        aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Pengguna</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Edit Pengguna</li>
-        </ol>
-    </nav>
-    <hr><br>
-    <form action="{{ route('admin.users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+    {{-- Tambahkan enctype="multipart/form-data" untuk upload file --}}
+    <form method="post" action="{{ route('admin.profile.update') }}" class="mt-4" enctype="multipart/form-data">
         @csrf
-        @method('PUT')
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="card">
-                    <div class="card-header">
-                        Edit User: {{ $user->name }}
-                    </div>
+        @method('patch')
+        <div class="row justify-content-center">
+            <div class="col-lg-8 mb-3">
+                <div class="card mb-4 h-100">
                     <div class="card-body">
-                        {{-- Tambahkan enctype="multipart/form-data" untuk upload file --}}
+                        <header>
+                            <h2 class="h5 mb-2">
+                                Profil Pengguna
+                            </h2>
+                            <hr>
+                            <p class="mt-1 text-muted">
+                                "Perbarui informasi profil dan alamat email akun Anda."
+                            </p>
+                        </header>
                         <div class="row">
-                            <div class="col-lg-6 mb-3">
+                            <div class="col-lg-12 mb-2">
                                 <label for="name" class="form-label">Nama Pengguna</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                    id="name" name="name" value="{{ old('name', $user->name) }}" required autofocus>
+                                <input id="name" name="name" type="text"
+                                    class="form-control @error('name') is-invalid @enderror"
+                                    value="{{ old('name', $user->name) }}" required autofocus autocomplete="name">
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             {{-- Field Gender --}}
-                            <div class="col-lg-6 mb-3">
+                            <div class="col-lg-6 mb-2">
                                 <label for="gender" class="form-label">Jenis Kelamin</label>
                                 <select class="form-select @error('gender') is-invalid @enderror" id="gender"
                                     name="gender">
@@ -54,50 +53,34 @@
                                 @enderror
                             </div>
 
-                            {{-- Field Email --}}
-                            <div class="col-lg-6 mb-3">
+                            <div class="col-lg-6 mb-2">
                                 <label for="email" class="form-label">Alamat Email</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                    id="email" name="email" value="{{ old('email', $user->email) }}" required>
+                                <input id="email" name="email" type="email"
+                                    class="form-control @error('email') is-invalid @enderror"
+                                    value="{{ old('email', $user->email) }}" required autocomplete="username">
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             {{-- Field Phone --}}
-                            <div class="col-lg-6 mb-3">
+                            <div class="col-lg-6 mb-2">
                                 <label for="phone" class="form-label">Nomor Telepon</label>
-                                <input type="text" class="form-control @error('phone') is-invalid @enderror"
-                                    id="phone" name="phone" value="{{ old('phone', $user->phone) }}" required>
+                                <input id="phone" name="phone" type="text"
+                                    class="form-control @error('phone') is-invalid @enderror"
+                                    value="{{ old('phone', $user->phone) }}" required>
                                 @error('phone')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             {{-- Field Instagram --}}
-                            <div class="col-lg-6 mb-3">
+                            <div class="col-lg-6 mb-2">
                                 <label for="instagram" class="form-label">Akun Instagram (Opsional)</label>
-                                <input type="text" class="form-control @error('instagram') is-invalid @enderror"
-                                    id="instagram" name="instagram" value="{{ old('instagram', $user->instagram) }}">
+                                <input id="instagram" name="instagram" type="text"
+                                    class="form-control @error('instagram') is-invalid @enderror"
+                                    value="{{ old('instagram', $user->instagram) }}">
                                 @error('instagram')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            {{-- Field Role --}}
-                            <div class="col-lg-6 mb-3">
-                                <label for="role" class="form-label">Role</label>
-                                <select class="form-select @error('role') is-invalid @enderror" id="role"
-                                    name="role" required>
-                                    <option value="">Pilih Role</option>
-                                    <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>
-                                        Admin</option>
-                                    <option value="author" {{ old('role', $user->role) == 'author' ? 'selected' : '' }}>
-                                        Author</option>
-                                    <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>User
-                                    </option> {{-- Tambahkan opsi 'user' --}}
-                                </select>
-                                @error('role')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -151,35 +134,53 @@
                                 @enderror
                             </div>
 
-                            {{-- Field Password --}}
-                            <div class="col-lg-6 mb-3">
-                                <label for="password" class="form-label">Password Baru (opsional)</label>
-                                <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                    id="password" name="password">
-                                <small class="text-muted">Biarkan kosong jika Anda tidak ingin mengubah kata sandi.</small>
+                            {{-- Bagian untuk mengubah password --}}
+                            <div class="col-lg-6 mb-2">
+                                <label for="current_password" class="form-label">Password Sekarang</label>
+                                <input id="current_password" name="current_password" type="password"
+                                    class="form-control @error('current_password') is-invalid @enderror"
+                                    autocomplete="current-password">
+                                @error('current_password')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-6 mb-2">
+                                <label for="password" class="form-label">Password Baru</label>
+                                <input id="password" name="password" type="password"
+                                    class="form-control @error('password') is-invalid @enderror"
+                                    autocomplete="new-password">
                                 @error('password')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-lg-6 mb-3">
+
+                            <div class="col-lg-6 mb-2">
                                 <label for="password_confirmation" class="form-label">Konfirmasi Password Baru</label>
-                                <input type="password" class="form-control" id="password_confirmation"
-                                    name="password_confirmation">
+                                <input id="password_confirmation" name="password_confirmation" type="password"
+                                    class="form-control" autocomplete="new-password">
                             </div>
                         </div>
                         <br>
-                        <button type="submit" class="btn btn-primary">Update Pengguna</button>
-                        <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Kembali</a>
+                        <div class="d-flex align-items-center gap-2">
+                            <button type="submit" class="btn btn-primary me-1">Simpan Perubahan</button>
+                            <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary">Kembali</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            {{-- Field Image --}}
             <div class="col-lg-4 mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <label for="image" class="form-label">Gambar Profil (Opsional)</label>
+                {{-- Field Image --}}
+                <div class="card card-body h-100">
+                    <div class="mb-3">
+                        <header>
+                            <h2 class="h5 mb-2">
+                                Gambar Profil
+                            </h2>
+                            <hr>
+                        </header>
                         @if ($user->image)
-                            <div class="mb-2">
+                            <div class="col-lg-12 mb-2">
                                 <img src="{{ asset('storage/' . $user->image) }}" alt="Current Profile Image"
                                     class="img-thumbnail" style="max-width: 150px;">
                                 <div class="form-check mt-2">
@@ -199,10 +200,76 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
+                    </form>
+                    <hr>
+
+                    <div class="mb-0">
+                        <header>
+                            <h2 class="h5 mb-3">
+                                Hapus Akun Pengguna
+                            </h2>
+                            <p class="mt-1 text-muted" style="font-size: small">
+                                Setelah akun Anda dihapus, semua sumber daya dan datanya akan dihapus secara
+                                permanen.
+                                Sebelum menghapus akun Anda, harap unduh data atau informasi apa pun yang ingin Anda
+                                simpan.
+                            </p>
+                        </header>
+
+                        <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal"
+                            data-bs-target="#confirmUserDeletionModal">
+                            Hapus Akun
+                        </button>
+
+                        <div class="modal fade" id="confirmUserDeletionModal" tabindex="-1"
+                            aria-labelledby="confirmUserDeletionModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form method="post" action="{{ route('admin.profile.destroy') }}">
+                                        @csrf
+                                        @method('delete')
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="confirmUserDeletionModalLabel">
+                                                Apakah Anda yakin ingin menghapus akun Anda?</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <p class="text-sm text-muted">
+                                                Setelah akun Anda dihapus, semua sumber daya dan datanya akan
+                                                dihapus
+                                                secara permanen. Masukkan kata sandi Anda untuk mengonfirmasi bahwa
+                                                Anda
+                                                ingin menghapus akun Anda secara permanen.
+                                            </p>
+
+                                            <div class="mb-3">
+                                                <label for="password_delete" class="visually-hidden">Password</label>
+                                                {{-- Label tersembunyi untuk aksesibilitas --}}
+                                                <input id="password_delete" name="password" type="password"
+                                                    class="form-control @error('password', 'userDeletion') is-invalid @enderror"
+                                                    placeholder="Password">
+                                                @error('password', 'userDeletion')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Kembali</button>
+                                            <button type="submit" class="btn btn-danger">Hapus Akun</button>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </form>
 @endsection
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

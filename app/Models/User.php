@@ -27,6 +27,10 @@ class User extends Authenticatable
         'instagram',
         'role',
         'image',
+        'address',
+        'city',
+        'province',
+        'postal_code',
     ];
 
     /**
@@ -65,7 +69,7 @@ class User extends Authenticatable
     // Cek apakah user adalah author
     public function isAuthor()
     {
-        return $this->role === 'author';
+        return $this->role === 'Author';
     }
 
     // Cek apakah user adalah user
