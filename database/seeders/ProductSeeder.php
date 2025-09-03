@@ -30,7 +30,7 @@ class ProductSeeder extends Seeder
                     'user_id' => $user->id,
                     'category_id' => $category->id,
                     'title' => $title,
-                    'sku' => null, // SKU bisa diisi nanti
+                    'sku' => strtoupper(Str::random(5)),
                     'meta_desc' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
                     'slug' => Str::slug($title),
                     'content' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',

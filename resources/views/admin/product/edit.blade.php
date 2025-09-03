@@ -47,6 +47,13 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <div class="col-lg-12 mb-2">
+                                <input type="hidden" class="form-control @error('sku') is-invalid @enderror" id="sku"
+                                    name="sku" value="{{ old('sku') }}" required>
+                                @error('title')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <div class="col-lg-6 mb-3">
                                 <label for="category_id" class="form-label">Kategori</label>
                                 <select class="form-select @error('category_id') is-invalid @enderror" id="category_id"
@@ -86,42 +93,42 @@
                                 <label for="stock">Stok</label>
                                 <input type="number" name="stock" class="form-control" id="stock"
                                     value="{{ old('stock', $product->stock) }}" placeholder="Masukkan jumlah stok">
-                            <div class="col-lg-12 mb-3">
-                                <label for="content" class="form-label">Konten</label>
-                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="10"
-                                    required>{{ old('content', $product->content) }}</textarea>
-                                @error('content')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="col-lg-12 mb-3">
-                                <label class="form-label">Status Artikel</label>
-                                <div class="d-flex">
-                                    <div class="form-check me-3">
-                                        <input class="form-check-input @error('status') is-invalid @enderror" type="radio"
-                                            name="status" id="statusDraft" value="0"
-                                            {{ old('status', $product->status ? 1 : 0) == 0 ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="statusDraft">
-                                            Draft
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input @error('status') is-invalid @enderror" type="radio"
-                                            name="status" id="statusPublished" value="1"
-                                            {{ old('status', $product->status ? 1 : 0) == 1 ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="statusPublished">
-                                            Published
-                                        </label>
-                                    </div>
+                                <div class="col-lg-12 mb-3">
+                                    <label for="content" class="form-label">Konten</label>
+                                    <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="10"
+                                        required>{{ old('content', $product->content) }}</textarea>
+                                    @error('content')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                @error('status')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                                @enderror
+                                <div class="col-lg-12 mb-3">
+                                    <label class="form-label">Status Artikel</label>
+                                    <div class="d-flex">
+                                        <div class="form-check me-3">
+                                            <input class="form-check-input @error('status') is-invalid @enderror"
+                                                type="radio" name="status" id="statusDraft" value="0"
+                                                {{ old('status', $product->status ? 1 : 0) == 0 ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="statusDraft">
+                                                Draft
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input @error('status') is-invalid @enderror"
+                                                type="radio" name="status" id="statusPublished" value="1"
+                                                {{ old('status', $product->status ? 1 : 0) == 1 ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="statusPublished">
+                                                Published
+                                            </label>
+                                        </div>
+                                    </div>
+                                    @error('status')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Update Artikel</button>
-                        <a href="{{ route('admin.product.index') }}" class="btn btn-secondary">Kembali</a>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Update Artikel</button>
+                            <a href="{{ route('admin.product.index') }}" class="btn btn-secondary">Kembali</a>
                     </form>
                 </div>
             </div>

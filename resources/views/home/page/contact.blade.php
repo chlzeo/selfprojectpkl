@@ -128,7 +128,7 @@
                             </div>
 
                            {{-- kotak ceklis untuk recaptcha--}}
-                            <div class="g-recaptcha mt-4" data-sitekey="{{ config('services.recaptcha.key') }}"></div>
+                            <div class="g-recaptcha mt-4" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
                             @error('g-recaptcha-response')
                                 <div class="text-danger mt-2">{{ $message }}</div>
                             @enderror

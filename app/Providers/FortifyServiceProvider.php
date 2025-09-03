@@ -55,5 +55,21 @@ class FortifyServiceProvider extends ServiceProvider
             \Laravel\Fortify\Contracts\LogoutResponse::class,
             \App\Http\Responses\LogoutResponse::class
         );
+        //register
+        Fortify::registerView(function () {
+            return view('auth/register');
+        });
+
+        Fortify::redirects('register', '/');
+
+        // Forgot Password
+        Fortify::requestPasswordResetLinkView(function () {
+            return view('auth.forgot-password');
+        });
+
+        // Reset Password
+        Fortify::resetPasswordView(function ($request) {
+            return view('auth.reset-password', ['request' => $request]);
+        });
     }
 }

@@ -26,6 +26,7 @@ return new class extends Migration
     $table->unsignedInteger('price')->nullable(); // TIDAK auto_increment
     $table->unsignedTinyInteger('discount')->default(0);
     $table->unsignedInteger('stock')->default(0);
+    $table->string('sku')->unique()->nullable();
 
     $table->timestamps();
 });

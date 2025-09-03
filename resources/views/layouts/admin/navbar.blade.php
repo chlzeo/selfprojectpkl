@@ -38,6 +38,10 @@
                     <a class="nav-link @yield('productsActive')"
                         href="{{ route('admin.product.index') }}">{{ __('Produk') }}</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link @yield('teamsActive')"
+                        href="{{ route('admin.testimoni.index') }}">{{ __('Testimoni') }}</a>
+                </li>
                 @if (Auth::user()->isAdmin())
                     <li class="nav-item">
                         <a class="nav-link @yield('inboxActive')"

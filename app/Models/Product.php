@@ -20,6 +20,7 @@ class Product extends Model
         'price',
         'discount',
         'stock', // Tambahkan stok ke dalam fillable
+        'sku'
     ];
 
     public function getRouteKeyName()
@@ -45,6 +46,12 @@ public function getFinalPriceAttribute()
         return $this->price - ($this->price * $this->discount / 100);
     }
     return $this->price;
+}
+
+// Relasi One-to-Many dengan Cart
+public function carts()
+{
+    return $this->hasMany(Cart::class);
 }
 
 }

@@ -27,9 +27,10 @@
             <div class="col-lg-6 mb-4 mb-lg-0">
                 <h2 class="fw-bold mb-3" style="color:#e00;">Tentang Kami</h2>
                 <p class="lead">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro iste necessitatibus in nemo corrupti
-                    culpa quia libero est commodi quaerat nihil, debitis repellendus, aliquam eaque maiores aperiam.
-                    Dolores, atque aperiam.
+                    Sebuah usaha yang berjalan di bidang otomotif, khususnya penjualan kendaraan bermotor roda dua dan empat. Kami
+                    menyediakan berbagai pilihan kendaraan dari merek-merek terkemuka, serta layanan servis dan perawatan
+                    profesional. Dengan pengalaman bertahun-tahun, kami berkomitmen untuk memberikan produk berkualitas
+                    dan layanan terbaik kepada pelanggan kami.
                 </p>
                 <ul class="list-unstyled">
                     <li class="mb-2"><span class="badge bg-danger me-2">1</span> Pilihan kendaraan Koleksi Chlzengine
@@ -72,15 +73,10 @@
         <div class="row">
             <div class="col">
                 <h1 class="text-light uppercase fw-bold">Best of the Best!</h1>
-                <p class="text-light my-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempora, expedita
-                    similique provident assumenda alias inventore adipisci, quis sit repellendus fugiat obcaecati vero
-                    eveniet cupiditate error non voluptas beatae excepturi molestiae.
-                    Expedita fugit quas ratione impedit, quaerat quidem veniam rerum ea iusto reprehenderit eaque alias
-                    omnis cumque saepe consectetur eius nobis voluptatem recusandae amet libero eligendi sit veritatis
-                    deleniti. Id, ut?
-                    Voluptate nam repellendus accusantium, omnis neque suscipit impedit non est sint, doloribus eos
-                    minima! Velit dignissimos minima sint ab a? Ad ab doloremque nesciunt dolores omnis, nobis corrupti
-                    praesentium a!</p>
+                <p class="text-light my-3">Disini adalah Koleksi andalan kami, Koleksi ini adalah flagship dan kebanggaan Showroom kami
+                    dengan part exclusive dan modifikasi terbaik yang kami tawarkan untuk anda. Kami selalu berusaha
+                    memberikan yang terbaik untuk pelanggan kami, dan Koleksi ini adalah contoh nyata dari komitmen
+                </p>
                 <div class="position-relative my-4"
                     style="height:220px; background:#222; border-radius:12px; overflow:hidden;">
                     <img src="{{ asset('assets/ferari.jpg') }}" alt="Best of the Best Cover"

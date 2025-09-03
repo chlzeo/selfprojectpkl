@@ -11,16 +11,17 @@
                     <a class="nav-link @yield('productActive')" href="{{ route('home.product.index') }}">{{ __('Product') }}</a>
                 </li>
                 <li class="nav-item me-2">
-                    <a class="nav-link @yield('homeActive')" href="{{ route('home') }}">{{ __('Beranda') }}</a>
+                    <a class="nav-link @yield('homeActive')" aria-current="page" href="/">Beranda</a>
                 </li>
-                <li class="nav-item me-2">
-                    <a class="nav-link @yield('inboxActive')" href="{{ route('home.contact.index') }}">{{ __('Contact us') }}</a>
+                <li><a class="nav-link @yield('inboxActive')"
+                        href="{{ route('home.contact.index') }}">{{ __('Contact us') }}</a>
                 </li>
                 <li class="nav-item me-2">
                     <a class="nav-link @yield('teamActive')" href="{{ route('home.team.index') }}">{{ __('Redaksi') }}</a>
                 </li>
-                <li class="nav-item me-2">
-                    <a class="nav-link @yield('articlesActive')" href="{{ route('home.articles.index') }}">{{ __('Blog') }}</a>
+                <li>
+                    <a class="nav-link @yield('articlesActive')"x
+                        href="{{ route('home.articles.index') }}">{{ __('Blog') }}</a>
                 </li>
                 <ul class="navbar-nav">
                     @guest
@@ -57,5 +58,4 @@
         </div>
     </div>
 </nav>
-    </div>
 </nav>

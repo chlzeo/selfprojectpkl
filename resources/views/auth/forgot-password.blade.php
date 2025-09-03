@@ -35,25 +35,29 @@
         <div class="login-card p-4 shadow" style="width:100%; max-width:350px;">
             <div class="text-center mb-4">
                 <img src="./transport.png" alt="Logo" width="48" height="48" style="background:#111; border-radius:50%; border:2px solid #e00;">
-                <h2 class="fw-bold mt-2" style="color:#e00;">CHLZENGINE</h2>
+                <h2 class="fw-bold mt-2" style="color:#e00;">Forgot password</h2>
             </div>
-             <form action="{{ route('login') }}" method="POST" autocomplete="off" novalidate>
-                 @csrf
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+            <form action="{{ route('password.email') }}" method="POST" autocomplete="off" novalidate>
+                @csrf
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
+                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Enter email" value="{{ old('email') }}" required autofocus>
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div> 
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" id="password" placeholder="Enter password">
-                </div>
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-danger">Login</button>
-                    <button type="button" class="btn btn-outline-danger mt-2" onclick="window.location.href='/register'">Register</button>
-                    <button type="button" class="btn btn-outline-danger mt-2" onclick="window.location.href='/forgot-password'">Forgot Password?</button>
+                    <button type="submit" class="btn btn-danger">Send</button>
                 </div>
             </form>
-            <a href="views/main" class="btn btn-outline-danger mt-3 w-100" style="font-weight:bold;">&larr; Back</a>
+            <a href="{{ route('login') }}" class="btn btn-outline-danger mt-3 w-100" style="font-weight:bold;">&larr; Back</a>
         </div>
     </div>
 </body>

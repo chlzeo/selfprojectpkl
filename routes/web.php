@@ -9,7 +9,9 @@ use App\Http\Controllers\Admin\InboxController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\InformasiController;
 use App\Http\Controllers\HomeController;
-use App\Models\Controllers\MerekController;
+use App\Http\Controllers\Admin\MerekController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\TestimoniController;
 
 // Route landing page
 Route::get('/', [HomeController::class, 'index'])->name('home.main');
@@ -17,16 +19,23 @@ Route::get('/articles', [HomeController::class, 'articles'])->name('home.article
 Route::get('/articles/{slug}', [HomeController::class, 'articlesShow'])->name('home.articles.show');
 Route::get('/articles/categories/{id}', [HomeController::class, 'articlesCategories'])->name('home.articles.categories');
 Route::get('/informasi', [HomeController::class, 'informasi'])->name('home.informasi.index');
-Route::get('/informasi/{slug}', [HomeController::class, 'informasinShow'])->name('home.informasi.show');
+Route::get('/informasi/{slug}', [HomeController::class, 'informasiShow'])->name('home.informasi.show');
 Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact.index');
 Route::post('/contact', [HomeController::class, 'contactStore'])->name('home.contact.store');
-
+Route::get('/team', [HomeController::class, 'team'])->name('home.team.index');
+Route::get('/testimoni', [HomeController::class, 'testimoni'])->name('home.testimoni.index');
+Route::get('/product', [HomeController::class, 'product'])->name('home.product.index');
+Route::get('/product/{slug}', [HomeController::class, 'productShow'])->name('home.product.show');
+Route::get('/product/categories/{id}', [HomeController::class, 'productCategories'])->name('home.product.categories');
 
 //Route halaman admin/dashboard
 Route::middleware(['auth'])->name('admin.')->group(function () {
     //route untuk dashboard
     Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('admin/articles', ArticleController::class); // manajemen artikel
+    Route::resource('admin/informasi', InformasiController::class); // manajemen informasi
+    Route::resource('admin/testimoni', TestimoniController::class); // manajemen kategori
+    
 
     // Rute profil user yang login
     Route::get('admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,6 +50,8 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
     Route::resource('admin/categories', CategoryController::class); // manajemen kategori
     Route::resource('admin/informasi', InformasiController::class); // manajemen kategori
     Route::resource('admin/merek', MerekController::class); // manajemen merek
+    Route::resource('admin/product', ProductController::class); // manajemen produk
+    Route::resource('admin/testimoni', TestimoniController::class); // manajemen testimoni
 
 
 

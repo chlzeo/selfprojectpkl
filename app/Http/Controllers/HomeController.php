@@ -7,6 +7,9 @@ use App\Models\Category;
 use App\Models\Informasi;
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Models\Testimoni;
+use App\Models\User;
+use App\Models\Product;
 use Illuminate\Support\Facades\Session; // Import Session facade
 use Illuminate\Support\Facades\Http; // Tambahkan ini untuk memanggil API reCAPTCHA
 use Illuminate\Validation\ValidationException; // Tambahkan ini untuk menangani exception validasi
@@ -70,21 +73,21 @@ class HomeController extends Controller
         }
 
         // Ambil hasil paginasi
-        $information = $query->paginate(6);
+        $informasi = $query->paginate(6);
 
         $categories = Category::all();
         $sidebar = Article::latest()->limit(5)->get();
 
-        return view('home.information.index', compact('information', 'categories', 'sidebar'));
+        return view('home.informasi.index', compact('informasi', 'categories', 'sidebar'));
     }
 
     public function informasiShow($slug)
     {
-        $information = Informasi::where('slug', $slug)->firstOrFail();
+        $informasi = Informasi::where('slug', $slug)->firstOrFail();
         $categories = Category::all();
         $sidebar = Article::latest()->limit(5)->get();
 
-        return view('home.information.show', compact('information', 'categories', 'sidebar'));
+        return view('home.informasi.show', compact('informasi', 'categories', 'sidebar'));
     }
 
     public function articlesCategories($categoryId)
@@ -152,6 +155,70 @@ class HomeController extends Controller
             Session::flash('error', 'Terjadi kesalahan saat mengirim pesan: ' . $e->getMessage());
             return redirect()->back()->withInput();
         }
+        
     }
 
+        public function team(Request $request)    
+
+    { 
+        $team = User::where('role', 'author', 'admin')->latest()->paginate(9);
+        $categories = Category::all();
+        $sidebar = Article::latest()->limit(5)->get();
+
+        return view('home.page.team', compact('team', 'categories', 'sidebar'));
+    }
+
+        public function testimoni(Request $request)
+    {
+        $testimoni = Testimoni::latest()->get();
+        return view('frontend.testimoni', compact('testimoni'));
+    }
+
+    // controller untuk article
+    public function Product(Request $request)
+    {
+        $query = Product::where('status', true)->latest();
+
+        // Cek apakah ada parameter 'search' dalam request
+        if ($request->has('search')) {
+            $searchTerm = $request->search;
+            // Tambahkan kondisi pencarian berdasarkan nama atau email
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('title', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        // Ambil hasil paginasi
+        $product = $query->paginate(6);
+
+        $categories = Category::all();
+        $sidebar = Informasi::latest()->limit(5)->get();
+
+        return view('home.product.index', compact('product', 'categories', 'sidebar'));
+    }
+
+    public function productShow($slug)
+    {
+        $product = Product::where('slug', $slug)->firstOrFail();
+        $categories = Category::all();
+        $sidebar = Informasi::latest()->limit(5)->get();
+
+        return view('home.product.show', compact('product', 'categories', 'sidebar'));
+    }
+
+    public function productCategories($categoryId)
+    {
+        // Mengambil artikel yang memiliki category_id yang sesuai
+        $product = Product::where('category_id', $categoryId)
+                           ->where('status', true)
+                           ->latest()
+                           ->paginate(8);
+
+        $categories = Category::all();
+        $sidebar = informasi::latest()->limit(5)->get();
+
+        return view('home.product.index', compact('product', 'categories', 'sidebar'));
+    }
 }
+
+
