@@ -52,7 +52,6 @@
                                 <th>Status</th>
                                 <th>Dibuat Pada</th>
                                 <th>Harga</th>
-                                <th>Diskon</th>
                                 <th>Stok</th>
                                 <th>Aksi</th>
                             </tr>
@@ -77,8 +76,7 @@
                                         @endif
                                     </td>
                                     <td class="text-center">{{ $val->created_at->format('d M Y H:i') }}</td>
-                                     <td>{{ $val->price ?? 'tidak ada' }}</td>
-                                    <td>{{ $val->discount ?? 'tidak ada' }}</td>
+                                    <td>{{ $val->price ?? 'tidak ada' }}</td>
                                     <td>{{$val->stock ?? 'tidak ada'}}</td>
                                     <td class="text-center">
                                         <a href="{{ route('admin.product.show', $val->slug) }}"

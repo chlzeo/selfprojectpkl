@@ -74,7 +74,6 @@ class ProductController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,gif|max:2048', // 2MB Max
             'status' => 'nullable|boolean',
             'price' => 'nullable|numeric|min:0', // Validasi harga
-            'discount' => 'nullable|integer|min:0|max:100', // Validasi
             'stock' => 'nullable|integer|min:0', // Validasi stok
             'sku' => 'nullable|string|max:255', // Validasi SKU jika diperlukan
         ]);
@@ -95,7 +94,6 @@ class ProductController extends Controller
             'image' => $imagePath,
             'status' => $request->boolean('status', false),
             'price' => $request->input('price', null), // Pastikan harga diupdate jika ada
-            'discount' => $request->input('discount', 0), // Pastikan disk
             'stock' => $request->input('stock', 0), // Pastikan stok diupdate jika ada
             'sku' => $request->input('sku', null), // Tambahkan SKU jika diperlukan
         ]);
@@ -151,7 +149,6 @@ class ProductController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,gif|max:2048',
             'status' => 'nullable|boolean',
             'price' => 'nullable|numeric|min:0', // Validasi harga
-            'discount' => 'nullable|integer|min:0|max:100', // Validasi discount
             'stock' => 'nullable|integer|min:0', // Validasi stok
             'sku' => 'nullable|string|max:255', // Validasi SKU jika diperlukan
         ]);
@@ -181,7 +178,6 @@ class ProductController extends Controller
             'image' => $imagePath,
             'status' => $request->boolean('status', false),
             'price' => $request->input('price', null), // Pastikan harga diupdate jika ada
-            'discount' => $request->input('discount', 0), // Pastikan diskon diupdate jika ada
             'stock' => $request->input('stock', 0), // Pastikan stok diupdate jika ada
             'sku' => $request->input('sku', null), // Tambahkan SKU jika diperlukan
         ]);

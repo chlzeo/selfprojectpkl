@@ -24,7 +24,6 @@ return new class extends Migration
 
     // ✅ Perbaikan di bawah ini:
     $table->unsignedInteger('price')->nullable(); // TIDAK auto_increment
-    $table->unsignedTinyInteger('discount')->default(0);
     $table->unsignedInteger('stock')->default(0);
     $table->string('sku')->unique()->nullable();
 

@@ -10,8 +10,10 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\InformasiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\MerekController;
+//use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TestimoniController;
+use App\Http\Controllers\CartController;
 
 // Route landing page
 Route::get('/', [HomeController::class, 'index'])->name('home.main');
@@ -28,6 +30,23 @@ Route::get('/product', [HomeController::class, 'product'])->name('home.product.i
 Route::get('/product/{slug}', [HomeController::class, 'productShow'])->name('home.product.show');
 Route::get('/product/categories/{id}', [HomeController::class, 'productCategories'])->name('home.product.categories');
 
+// Routes untuk Keranjang (Frontend)
+Route::prefix('cart')->name('cart.')->group(function () {
+    // Tambahkan middleware 'auth' di sini
+    Route::post('/add/{product:slug}', [CartController::class, 'addToCart'])->name('add')->middleware('auth');
+    Route::get('/', [CartController::class, 'showCart'])->name('show');
+    Route::post('/update/{slug}', [CartController::class, 'updateCart'])->name('update');
+    Route::delete('/remove/{slug}', [CartController::class, 'removeCart'])->name('remove');
+});
+
+// Routes untuk Checkout (Frontend)
+// Checkout juga harus memerlukan autentikasi
+Route::prefix('checkout')->name('checkout.')->middleware('auth')->group(function () {
+    Route::get('/', [CartController::class, 'checkout'])->name('index');
+    Route::post('/process', [CartController::class, 'processCheckout'])->name('process');
+    Route::get('/success/{orderNumber}', [CartController::class, 'checkoutSuccess'])->name('success');
+});
+
 //Route halaman admin/dashboard
 Route::middleware(['auth'])->name('admin.')->group(function () {
     //route untuk dashboard
@@ -35,7 +54,6 @@ Route::middleware(['auth'])->name('admin.')->group(function () {
     Route::resource('admin/articles', ArticleController::class); // manajemen artikel
     Route::resource('admin/informasi', InformasiController::class); // manajemen informasi
     Route::resource('admin/testimoni', TestimoniController::class); // manajemen kategori
-    
 
     // Rute profil user yang login
     Route::get('admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -59,4 +77,10 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
     Route::get('admin/inbox', [InboxController::class, 'index'])->name('inbox.index');
     Route::put('admin/inbox/{inbox}/toggle-status', [InboxController::class, 'toggleStatus'])->name('inbox.toggleStatus');
     Route::delete('admin/inbox/{inbox}', [InboxController::class, 'destroy'])->name('inbox.destroy');
+
+    // Route untuk manajemen pesanan
+    Route::get('admin/orders', [App\Http\Controllers\Admin\OrderController::class, 'index'])->name('orders.index');
+    Route::get('admin/orders/{order}', [App\Http\Controllers\Admin\OrderController::class, 'show'])->name('orders.show');
+    Route::put('admin/orders/{order}/status', [App\Http\Controllers\Admin\OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+
 });

@@ -16,40 +16,36 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link @yield('articlesActive')"
-                        href="{{ route('admin.articles.index') }}">{{ __('Artikel') }}</a>
+                        href="{{ route('admin.articles.index') }}">{{ __('Articles') }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link @yield('categoriesActive')"
-                        href="{{ route('admin.categories.index') }}">{{ __('Kategori') }}</a>
+                        href="{{ route('admin.categories.index') }}">{{ __('Categories') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link @yield('informasiActive')"
-                        href="{{ route('admin.informasi.index') }}">{{ __('Informasi') }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link @yield('merekActive')"
-                        href="{{ route('admin.merek.index') }}">{{ __('Merek') }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link @yield('usersActive')"
-                        href="{{ route('admin.users.index') }}">{{ __('Pengguna') }}</a>
+                    <a class="nav-link @yield('testimoniActive')"
+                        href="{{ route('admin.testimoni.index') }}">{{ __('Testimonials') }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link @yield('productsActive')"
-                        href="{{ route('admin.product.index') }}">{{ __('Produk') }}</a>
+                        href="{{ route('admin.product.index') }}">{{ __('Products') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link @yield('teamsActive')"
-                        href="{{ route('admin.testimoni.index') }}">{{ __('Testimoni') }}</a>
+                    <a class="nav-link @yield('ordersActive')"
+                        href="{{ route('admin.orders.index') }}">{{ __('Orders') }}</a>
                 </li>
-                @if (Auth::user()->isAdmin())
-                    <li class="nav-item">
-                        <a class="nav-link @yield('inboxActive')"
-                            href="{{ route('admin.inbox.index') }}">{{ __('Inbox') }}</a>
-                    </li>
-                @endif
+                <li class="nav-item">
+                    <a class="nav-link @   yield('informationActive')"
+                        href="{{ route('admin.informasi.index') }}">{{ __('Information') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @yield('inboxActive')"
+                        href="{{ route('admin.inbox.index') }}">{{ __('Inbox') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @yield('userActive')"
+                        href="{{ route('admin.users.index') }}">{{ __('User') }}</a>
             </ul>
-
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle fw-bold text-primary" href="#"
@@ -58,7 +54,7 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('admin.profile.edit') }}">
+                        <a class="dropdown-item" href="#">
                             {{ __('Profile') }}
                         </a>
 

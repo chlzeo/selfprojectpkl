@@ -1,101 +1,141 @@
-@extends('layouts.admin.master')
+@extends('frontend.master')
 
-@section('productActive')
-    text-primary
-@endsection
+@section('title', $product->title . ' - Detail Produk')
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card shadow-sm border-0 rounded-lg"> {{-- Menambahkan shadow dan border-0 untuk tampilan modern --}}
+<section class="container-xl mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('home.product.index') }}" class="text-decoration-none">Produk</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ Str::limit($product->title, 50) }}</li>
+        </ol>
+    </nav>
+</section>
+
+<section class="container-xl my-4">
+    @if (Session::has('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ Session::get('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (Session::has('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ Session::get('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    <div class="row gx-4">
+        <div class="col-lg-5 mb-3">
+            <div class="bg-white rounded shadow-sm p-4 text-center">
                 @if ($product->image)
-                    {{-- Jika ada gambar product, tampilkan gambar tersebut --}}
-                    <div class="ratio ratio-21x9">
-                        <img class="card-img-top object-fit-cover rounded-top" src="{{ asset('storage/' . $product->image) }}"
-                            alt="Gambar product: {{ $product->title }}">
-                    </div>
-                    <div class="p-4 px-md-5">
-                        {{-- Harga dan SKU --}}
-                        <ul class="list-unstyled mb-4">
-                            <li><strong>SKU:</strong> {{ $product->sku ?? 'Tidak tersedia' }}</li>
-                            <li>
-                                <strong>Harga:</strong>
-                                @if ($product->discount_price)
-                                    <span class="text-decoration-line-through text-muted me-2">
-                                        Rp{{ number_format($product->price, 0, ',', '.') }}
-                                    </span>
-                                    <span class="text-danger fw-semibold">
-                                        Rp{{ number_format($product->discount_price, 0, ',', '.') }}
-                                    </span>
-                                @else
-                                    <span class="fw-semibold">Rp{{ number_format($product->price, 0, ',', '.') }}</span>
-                                @endif
-                            </li>
-                        </ul>
-                    </div>
+                    <img src="{{ asset('storage/' . $product->image) }}" class="img-fluid rounded mb-3" alt="{{ $product->title }}" style="max-height:350px;object-fit:contain;">
                 @else
-                    {{-- Jika gambar product null, tampilkan gambar dummy --}}
-                    <div class="ratio ratio-21x9 rounded-top d-flex align-items-center"
-                        style="background: linear-gradient(rgba(25, 135, 84, 0.7), rgba(13, 110, 253, 0.7)), url('https://wallpapercave.com/wp/wp10992174.png'); background-size: cover; background-position: center;">
-                        <h1 class="text-white ms-lg-5 ms-3" style="margin-top: 18%"><b>Dealer Chlze </b> <br> <small>Dealer
-                                mobil paling
-                                Terbaik dan gacor</small></h1>
+                    <div class="d-flex align-items-center justify-content-center bg-light text-muted rounded" style="height: 350px;">
+                        No Image
                     </div>
                 @endif
-                <div class="card-body p-4 p-md-5"> {{-- Menambah padding untuk tampilan yang lebih luas --}}
-                    <h1 class="card-title mb-3" style="font-size: 2rem; font-weight: 700;">{{ $product->title }}</h1>
-                    <div class="text-muted mb-4 d-flex flex-wrap align-items-center small"> {{-- Mengurangi ukuran font meta --}}
-                        <span class="me-3">
-                            <i class="fas fa-user me-1"></i> Penjual: <strong>{{ $product->user->name }}</strong>
-                        </span>
-                        <span class="me-3">
-                            <i class="fas fa-tag me-1"></i> Kategori: <strong>{{ $product->category->name }}</strong>
-                        </span>
-                        <span class="me-3">
-                            <i class="fas fa-calendar-alt me-1"></i> Dibuat: {{ $product->created_at->format('d M Y H:i') }}
-                        </span>
-                        <span>
-                            <i class="fas fa-info-circle me-1"></i> Status:
-                            @if ($product->status)
-                                <span class="badge bg-primary">Published</span>
-                            @else
-                                <span class="badge bg-danger">Draft</span>
-                            @endif
-                        </span>
-                    </div>
-
-                    <hr class="my-3">
-
-                    <div class="note-editable mt-4" style="font-size: 1rem; line-height: 1.5;">
+                <div class="mt-2">
+                    <span class="badge bg-secondary">{{ $product->category->name ?? 'Kategori' }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-3">
+            <div class="bg-white rounded shadow-sm p-4 h-100">
+                <h1 class="h4 fw-bold mb-2">{{ $product->title }}</h1>
+                <div class="mb-2">
+                    <span class="text-warning">
+                        @for ($i = 1; $i <= 5; $i++)
+                            <i class="bi bi-star{{ $i <= $product->rating ? '-fill' : '' }}"></i>
+                        @endfor
+                    </span>
+                    <span class="ms-2 small text-muted">({{ $product->rating ?? 0 }})</span>
+                </div>
+                <p class="text-muted small mb-2">SKU: {{ $product->sku ?? 'N/A' }}</p>
+                @php
+                    $finalPrice = $product->getFinalPriceAttribute();
+                @endphp
+                <h2 class="text-success fw-bold mb-3" style="font-size:2rem;">
+                    Rp{{ number_format($finalPrice, 0, ',', '.') }}
+                </h2>
+                <div class="mb-3">
+                    <span class="fw-semibold">Stok:</span>
+                    <span class="badge {{ $product->stock > 0 ? 'bg-info' : 'bg-danger' }} fs-6">
+                        {{ $product->stock > 0 ? $product->stock . ' Tersedia' : 'Stok Habis' }}
+                    </span>
+                </div>
+                <div class="mb-3">
+                    <span class="fw-semibold">Jenis Produk:</span>
+                    <span class="badge bg-secondary fs-6">{{ $product->type->name ?? 'Tidak Ada' }}</span>
+                </div>
+                <div class="mb-3">
+                    <span class="fw-semibold">Deskripsi:</span>
+                    <div class="text-break small">
                         {!! $product->content !!}
-                    </div>
-
-                    <hr class="my-3">
-
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a href="{{ route('admin.product.index') }}" class="btn btn-secondary">
-                            <i class="fas fa-arrow-left me-2"></i> Kembali ke Daftar product
-                        </a>
-                        @if (Auth::check() && (Auth::user()->id === $product->user_id || Auth::user()->isAdmin()))
-                            <div>
-                                <a href="{{ route('admin.product.edit', $product->slug) }}"
-                                    class="btn btn-warning text-white me-2">
-                                    <i class="fas fa-edit me-2"></i> Edit product
-                                </a>
-                                <form action="{{ route('admin.product.destroy', $product->slug) }}" method="POST"
-                                    class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Apakah Anda yakin ingin menghapus product ini? Tindakan ini tidak dapat dibatalkan.')">
-                                        <i class="fas fa-trash-alt me-2"></i> Hapus product
-                                    </button>
-                                </form>
-                            </div>
-                        @endif
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-lg-3 mb-3">
+            <div class="bg-white rounded shadow-sm p-4 h-100">
+                <form action="{{ route('cart.add', $product->slug) }}" method="POST" class="mb-3">
+                    @csrf
+                    <div class="mb-2">
+                        <label for="quantity" class="form-label small">Jumlah</label>
+                        <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ $product->stock }}" class="form-control form-control-sm w-50" style="display:inline-block;">
+                    </div>
+                    <button type="submit" class="btn btn-warning w-100 mb-2" @if ($product->stock == 0) disabled @endif>
+                        <i class="bi bi-cart-plus me-2"></i>
+                        {{ $product->stock == 0 ? 'Stok Habis' : 'Tambah ke Keranjang' }}
+                    </button>
+                </form>
+                <a href="{{ route('checkout.index') }}" class="btn btn-success w-100 mb-2">
+                    <i class="bi bi-bag-check me-2"></i> Beli Sekarang
+                </a>
+                <div class="mt-3">
+                    <span class="text-muted small">Dikirim dari: <b>Showroom Official</b></span>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="row gx-4 mt-4">
+        <div class="col-lg-12">
+            <div class="card shadow-sm border-0 p-3">
+                <h5 class="fw-bold mb-3">Produk Terkait</h5>
+                <div class="row">
+                    @forelse ($relatedProducts as $related)
+                        <div class="col-6 col-md-3 mb-3">
+                            <a href="{{ route('home.product.show', $related->slug) }}"
+                                class="card h-100 shadow-sm border-0 text-decoration-none text-dark position-relative overflow-hidden">
+                                @if ($related->image)
+                                    <img src="{{ asset('storage/' . $related->image) }}" class="img-fluid rounded-top"
+                                        alt="{{ $related->title }}" style="height: 150px; object-fit: cover;">
+                                @else
+                                    <div class="d-flex align-items-center justify-content-center bg-primary-subtle text-muted rounded-top"
+                                        style="height: 150px;">
+                                        No Image
+                                    </div>
+                                @endif
+                                <div class="card-body p-2">
+                                    <h6 class="card-title fw-semibold mb-1" style="font-size:1rem;">{{ Str::limit($related->title, 40) }}</h6>
+                                    @php
+                                        $relatedFinalPrice = $related->getFinalPriceAttribute();
+                                    @endphp
+                                    <p class="card-text text-success fw-bold">
+                                        Rp{{ number_format($relatedFinalPrice, 0, ',', '.') }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    @empty
+                        <div class="col-12">
+                            <div class="alert alert-info text-center" role="alert">
+                                Tidak ada produk terkait yang ditemukan.
+                            </div>
+                        </div>
+                    @endforelse
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 @endsection

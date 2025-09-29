@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    @include('layouts.frontend.head')
-    @include('layouts.frontend.style')
+    @include('frontend.head')
+    @include('frontend.style')
     @vite([])
 </head>
 
@@ -149,7 +149,7 @@
         </div>
     </main>
 
-    @include('layouts.frontend.script')
+    @include('frontend.script')
 
 </body>
 

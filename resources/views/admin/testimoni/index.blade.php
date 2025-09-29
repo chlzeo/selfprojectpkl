@@ -32,7 +32,7 @@
 
             <div class="row gx-4">
                 <div class="col-lg-8 mb-3">
-                    @if ($testimonis->isEmpty())
+                    @if ($testimoni->isEmpty())
                         <div class="alert alert-warning text-center" role="alert">
                             Tidak ada testimoni yang ditemukan.
                         </div>
@@ -47,10 +47,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($testimonis as $val)
+                                @foreach ($testimoni as $val)
                                     <tr>
                                         <td class="text-center">
-                                            {{ isset($testimonis->firstItem) ? $loop->iteration + $testimonis->firstItem() - 1 : $loop->iteration }}
+                                            {{ isset($testimoni->firstItem) ? $loop->iteration + $testimoni->firstItem() - 1 : $loop->iteration }}
                                         </td>
                                         <td>{{ $val->message }}</td>
                                         <td>{{ $val->rating }}</td>
@@ -74,7 +74,7 @@
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-end">
-                            {{ $testimonis->links('pagination::bootstrap-4') }}
+                            {{ $testimoni->links('pagination::bootstrap-4') }}
                         </div>
                     @endif
                 </div>

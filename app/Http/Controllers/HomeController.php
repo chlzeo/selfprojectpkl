@@ -10,6 +10,7 @@ use App\Models\Contact;
 use App\Models\Testimoni;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Merek;
 use Illuminate\Support\Facades\Session; // Import Session facade
 use Illuminate\Support\Facades\Http; // Tambahkan ini untuk memanggil API reCAPTCHA
 use Illuminate\Validation\ValidationException; // Tambahkan ini untuk menangani exception validasi
@@ -73,12 +74,12 @@ class HomeController extends Controller
         }
 
         // Ambil hasil paginasi
-        $informasi = $query->paginate(6);
+        $information = $query->paginate(6);
 
         $categories = Category::all();
         $sidebar = Article::latest()->limit(5)->get();
 
-        return view('home.informasi.index', compact('informasi', 'categories', 'sidebar'));
+        return view('home.informasi.index', compact('information', 'categories', 'sidebar'));
     }
 
     public function informasiShow($slug)
@@ -175,9 +176,10 @@ class HomeController extends Controller
     }
 
     // controller untuk article
-    public function Product(Request $request)
+ // controller untuk product
+    public function product(Request $request)
     {
-        $query = Product::where('status', true)->latest();
+        $query = product::where('status', true)->latest();
 
         // Cek apakah ada parameter 'search' dalam request
         if ($request->has('search')) {
@@ -189,36 +191,48 @@ class HomeController extends Controller
         }
 
         // Ambil hasil paginasi
-        $product = $query->paginate(6);
+        $products = $query->paginate(8);
 
         $categories = Category::all();
         $sidebar = Informasi::latest()->limit(5)->get();
 
-        return view('home.product.index', compact('product', 'categories', 'sidebar'));
+        return view('home.product.index', compact('products', 'categories', 'sidebar'));
     }
 
     public function productShow($slug)
     {
+        // Mengambil produk utama berdasarkan slug
         $product = Product::where('slug', $slug)->firstOrFail();
-        $categories = Category::all();
+
+        // Mengambil produk terkait berdasarkan type_id yang sama
+        // dan mengecualikan produk yang sedang ditampilkan
+        $relatedProducts = Product::where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id) // Pastikan produk yang sedang dilihat tidak ikut
+            ->inRandomOrder() // Ambil secara acak
+            ->limit(3) // Batasi hingga 3 produk terkait
+            ->get();
+
+            $finalPrice = $product->price - ($product->discount ?? 0);
+
+        // Mengirimkan semua data ke view
+        return view('home.product.show', compact('product', 'relatedProducts', 'finalPrice'));
+    }
+
+    public function productsTypes($merekId)
+    {
+        // Mengambil artikel yang memiliki type_id yang sesuai
+        $products = Product::where('type_id', $merekId)
+            ->where('status', true)
+            ->latest()
+            ->paginate(8);
+
+        $types = Merek::all();
         $sidebar = Informasi::latest()->limit(5)->get();
 
-        return view('home.product.show', compact('product', 'categories', 'sidebar'));
+        return view('home.product.index', compact('products', 'merek', 'sidebar'));
     }
-
-    public function productCategories($categoryId)
-    {
-        // Mengambil artikel yang memiliki category_id yang sesuai
-        $product = Product::where('category_id', $categoryId)
-                           ->where('status', true)
-                           ->latest()
-                           ->paginate(8);
-
-        $categories = Category::all();
-        $sidebar = informasi::latest()->limit(5)->get();
-
-        return view('home.product.index', compact('product', 'categories', 'sidebar'));
-    }
+    
+    
 }
 
 

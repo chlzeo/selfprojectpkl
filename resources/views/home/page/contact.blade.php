@@ -1,4 +1,4 @@
-@extends('layouts.frontend.master')
+@extends('frontend.master')
 
 @section('contactActive')
     active

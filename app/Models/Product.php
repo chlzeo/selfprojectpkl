@@ -18,7 +18,6 @@ class Product extends Model
         'image',
         'status',
         'price',
-        'discount',
         'stock', // Tambahkan stok ke dalam fillable
         'sku'
     ];
@@ -53,5 +52,11 @@ public function carts()
 {
     return $this->hasMany(Cart::class);
 }
-
+public function getDiscountPercentAttribute()
+{
+    if ($this->old_price > 0) {
+        return round((($this->old_price - $this->price) / $this->old_price) * 100);
+    }
+    return 0;
+}
 }

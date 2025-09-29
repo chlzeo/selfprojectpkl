@@ -72,14 +72,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-lg-6 mb-2">
-                                <label for="discount" class="form-label">Diskon</label>
-                                <input type="number" name="discount" class="form-control @error('discount') is-invalid @enderror"
-                                    id="discount" value="{{ old('discount') }}" placeholder="0 - 100">
-                                @error('discount')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
                             <div class="form-group  mt-2">
                                 <label for="stock">Stok</label>
                                 <input type="number" name="stock" class="form-control @error('stock') is-invalid @enderror"

@@ -1,4 +1,4 @@
-@extends('layouts.admin.frontend.master')
+@extends('frontend.master')
 
 @section('content')
     <!-- Hero Section Start -->

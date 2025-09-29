@@ -1,4 +1,4 @@
-<footer class="footer-news d-print-none py-4">
+<footer class="footer-news d-print-none py-4 bg-dark mt-auto w-100" style="position:relative; bottom:0;">
     <div class="container-xl">
         <div class="row text-center align-items-center flex-row-reverse">
             <div class="col-lg-auto ms-lg-auto">
@@ -24,3 +24,14 @@
         </div>
     </div>
 </footer>
+<style>
+    body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .footer-news {
+        margin-top: auto;
+    }
+</style>

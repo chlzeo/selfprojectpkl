@@ -85,11 +85,6 @@
                             </div>
 
                             <div class="form-group mt-2">
-                                <label for="discount">Diskon (%)</label>
-                                <input type="number" name="discount" class="form-control" id="discount"
-                                    value="{{ old('discount', $product->discount) }}" placeholder="0 - 100">
-                            </div>
-                            <div class="form-group mt-2">
                                 <label for="stock">Stok</label>
                                 <input type="number" name="stock" class="form-control" id="stock"
                                     value="{{ old('stock', $product->stock) }}" placeholder="Masukkan jumlah stok">

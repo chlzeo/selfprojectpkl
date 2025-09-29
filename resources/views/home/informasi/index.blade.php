@@ -1,6 +1,6 @@
-@extends('layouts.frontend.master')
+@extends('frontend.master')
 
-@section('informationActive')
+@section('informasiActive')
     active
 @endsection
 
@@ -21,7 +21,7 @@
                 <div class="card card-body shadow-sm border-0 shadow-sm border-0 small p-4">
                     @forelse ($information as $key => $val)
                         <div class="col-12 mb-1">
-                            <a href="{{ route('home.information.show', $val->slug) }}" class="text-decoration-none">
+                            <a href="{{ route('home.informasi.show', $val->slug) }}" class="text-decoration-none">
                                 <h5 class="fw-bold"><small>{{ $val->title }}</small></h5>
                             </a>
                             <p class="text-dark">{{ Str::limit(strip_tags($val->content), 250) }}</p>
@@ -42,7 +42,7 @@
             </div>
 
             <!-- sidebar -->
-            @include('home.information.sidebar')
+            @include('home.informasi.sidebar')
 
         </div>
     </section>

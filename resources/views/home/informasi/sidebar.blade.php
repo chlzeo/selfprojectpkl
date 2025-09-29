@@ -1,6 +1,6 @@
  <div class="col-lg-3 mt-5 mt-lg-0">
                 <div class="card card-body shadow-sm border-0 mb-4 p-0">
-                    <form action="{{ route('home.information.index') }}" method="GET">
+                    <form action="{{ route('home.informasi.index') }}" method="GET">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Cari Informasi..." name="search">
                             <button class="btn btn-outline-secondary" type="submit" value="{{ request('search') }}"><i
