@@ -23,9 +23,10 @@ class HomeController extends Controller
         // Mengambil 7 artikel terbaru, termasuk relasi user dan category
         $articles = Article::with(['user', 'category'])->where('status', true)->latest()->limit(7)->get();
         $sidebar = Informasi::latest()->limit(5)->get();
+        $products = product::where('status', true)->limit(4)->latest()->get();
         $categories = Category::all();
 
-        return view('home.main', compact('articles', 'categories', 'sidebar'));
+        return view('home.main', compact('articles', 'categories', 'sidebar', 'products'));
     }
 
     // controller untuk article

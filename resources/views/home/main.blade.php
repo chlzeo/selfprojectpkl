@@ -15,7 +15,7 @@
                     <h1 class="display-3 fw-bold" style="letter-spacing:2px;">MOVED TO WIN</h1>
                     <p class="lead mb-4" style="font-size:1.4rem;">Discover the power, style, and innovation of our
                         latest vehicles. Built for those who dare to lead.</p>
-                    <a href="#" class="btn btn-danger btn-lg px-4"
+                    <a href="/product" class="btn btn-danger btn-lg px-4"
                         style="background:#e00; border:none; font-weight:bold;">Explore Inventory</a>
                 </div>
             </div>
@@ -27,7 +27,8 @@
             <div class="col-lg-6 mb-4 mb-lg-0">
                 <h2 class="fw-bold mb-3" style="color:#e00;">Tentang Kami</h2>
                 <p class="lead">
-                    Sebuah usaha yang berjalan di bidang otomotif, khususnya penjualan kendaraan bermotor roda dua dan empat. Kami
+                    Sebuah usaha yang berjalan di bidang otomotif, khususnya penjualan kendaraan bermotor roda dua dan
+                    empat. Kami
                     menyediakan berbagai pilihan kendaraan dari merek-merek terkemuka, serta layanan servis dan perawatan
                     profesional. Dengan pengalaman bertahun-tahun, kami berkomitmen untuk memberikan produk berkualitas
                     dan layanan terbaik kepada pelanggan kami.
@@ -73,7 +74,8 @@
         <div class="row">
             <div class="col">
                 <h1 class="text-light uppercase fw-bold">Best of the Best!</h1>
-                <p class="text-light my-3">Disini adalah Koleksi andalan kami, Koleksi ini adalah flagship dan kebanggaan Showroom kami
+                <p class="text-light my-3">Disini adalah Koleksi andalan kami, Koleksi ini adalah flagship dan kebanggaan
+                    Showroom kami
                     dengan part exclusive dan modifikasi terbaik yang kami tawarkan untuk anda. Kami selalu berusaha
                     memberikan yang terbaik untuk pelanggan kami, dan Koleksi ini adalah contoh nyata dari komitmen
                 </p>
@@ -86,53 +88,37 @@
             </div>
         </div>
         <div class="row mt-4 justify-content-center">
-            <!-- Card 1 -->
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                <div class="card h-100 shadow border-0">
-                    <img src="{{ asset('assets/2018-bikes-4k-yamaha-yzf-r1m-wallpaper-preview.jpg') }}" class="card-img-top"
-                        alt="Yamaha R1M" style="object-fit:cover; height:180px;">
-                    <div class="card-body">
-                        <h5 class="card-title">Yamaha YZF-R1M</h5>
-                        <p class="card-text">Superbike legendaris dengan performa tinggi dan teknologi MotoGP.</p>
-                        <a href="#" class="btn btn-danger" style="background:#e00; border:none;">Lihat Detail</a>
+            @forelse ($products as $val)
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100 shadow border-0">
+                        <div class="col-lg">
+                            @if ($val->image)
+                                <img class="img-fluid w-100"
+                                    style="height: 200px; object-fit: cover; border-top-left-radius: .5rem; border-top-right-radius: .5rem;"
+                                    src="{{ asset('storage/' . $val->image) }}" alt="Gambar Artikel: {{ $val->title }}">
+                            @else
+                                <div class="d-flex align-items-center justify-content-center text-white-50"
+                                    style="height: 200px; background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(13, 110, 253, 0.7)), url('https://wallpapercave.com/wp/wp10992174.png'); background-size: cover; background-position: center; border-top-left-radius: .5rem; border-top-right-radius: .5rem;">
+                                    MyBlog Image
+                                </div>
+                            @endif
+
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $val->title }}</h5>
+                            <p class="card-text">{{ $val->meta_desc }}</p>
+                            <a href="/product/{{ $val->slug }}" class="btn btn-danger"
+                                style="background:#e00; border:none;">Lihat Detail</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Card 2 -->
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                <div class="card h-100 shadow border-0">
-                    <img src="./dodge.jpeg" class="card-img-top" alt="Dodge" style="object-fit:cover; height:180px;">
-                    <div class="card-body">
-                        <h5 class="card-title">Dodge Challenger</h5>
-                        <p class="card-text">Muscle car Amerika dengan desain ikonik dan tenaga besar.</p>
-                        <a href="#" class="btn btn-danger" style="background:#e00; border:none;">Lihat Detail</a>
+            @empty
+                <div class="col-12">
+                    <div class="alert alert-info text-center" role="alert">
+                        Belum ada produk yang tersedia.
                     </div>
                 </div>
-            </div>
-            <!-- Card 3 -->
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                <div class="card h-100 shadow border-0">
-                    <img src="./YAMAHA-R1M-MONSTER-ENERGY-GP-2019-3.jpg" class="card-img-top" alt="Yamaha R1M Monster"
-                        style="object-fit:cover; height:180px;">
-                    <div class="card-body">
-                        <h5 class="card-title">Yamaha R1M Monster GP</h5>
-                        <p class="card-text">Edisi spesial dengan livery Monster Energy, siap melibas lintasan.</p>
-                        <a href="#" class="btn btn-danger" style="background:#e00; border:none;">Lihat Detail</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 4 (contoh tambahan) -->
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                <div class="card h-100 shadow border-0">
-                    <img src="https://www.dodge.com/bhpimages/2023/durango/2023-dodge-durango-srt-hellcat-awd.png"
-                        class="card-img-top" alt="Durango" style="object-fit:cover; height:180px;">
-                    <div class="card-body">
-                        <h5 class="card-title">Dodge Durango SRT</h5>
-                        <p class="card-text">SUV bertenaga supercharged dengan kenyamanan dan performa maksimal.</p>
-                        <a href="#" class="btn btn-danger" style="background:#e00; border:none;">Lihat Detail</a>
-                    </div>
-                </div>
-            </div>
+            @endforelse
         </div>
         <!-- Section "Mengapa Harus Memilih Kami?" langsung di bawah card -->
         <div class="row justify-content-center mt-5">

@@ -36,9 +36,8 @@ class ProductSeeder extends Seeder
                     'content' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
                     'image' => null,
                     'status' => true,
-                    'price' => rand(10000, 100000), // Generate random price
-                    'discount' => rand(0, 50), // Generate random discount percentage
-                    'stock' => rand(1, 100), // Generate random stock quantity
+                    'price' => rand(10000, 100000),
+                    'stock' => rand(1, 100),
             
                 ]);
             }

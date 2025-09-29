@@ -22,7 +22,6 @@ return new class extends Migration
     $table->string('image')->nullable();
     $table->boolean('status')->default(true);
 
-    // ✅ Perbaikan di bawah ini:
     $table->unsignedInteger('price')->nullable(); // TIDAK auto_increment
     $table->unsignedInteger('stock')->default(0);
     $table->string('sku')->unique()->nullable();

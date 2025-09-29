@@ -1,4 +1,4 @@
-@extends('layouts.frontend.master')
+@extends('frontend.master')
 
 @section('title', 'Checkout Berhasil')
 
@@ -15,7 +15,7 @@
                 <p class="mb-4">Kami akan segera mengirimkan konfirmasi detail pesanan ke email Anda ({{ $order->customer_email }}).</p>
 
                 <div class="d-grid gap-2 col-md-8 mx-auto">
-                    <a href="{{ route('home.products.index') }}" class="btn btn-primary btn-lg">Lanjut Belanja</a>
+                    <a href="{{ route('home.product.index') }}" class="btn btn-primary btn-lg">Lanjut Belanja</a>
                     {{-- Tambahkan link ke halaman riwayat pesanan jika ada --}}
                     {{-- @auth
                         <a href="{{ route('user.orders') }}" class="btn btn-outline-secondary btn-lg">Lihat Riwayat Pesanan</a>

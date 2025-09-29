@@ -69,7 +69,7 @@ class User extends Authenticatable
     // Cek apakah user adalah author
     public function isAuthor()
     {
-        return $this->role === 'Author';
+        return $this->role === 'author';
     }
 
     // Cek apakah user adalah user

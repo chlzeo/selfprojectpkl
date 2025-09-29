@@ -13,14 +13,14 @@ export default defineConfig({
     ],
     // Bagian server yang penting untuk Docker
     server: {
-        host: '0.0.0.0', // Mengizinkan akses dari host manapun
-        port: 5173,      // Port yang diekspos di container
+        host: '0.0.0.0',
+        port: 5173,
         hmr: {
-            host: 'localhost', // Host yang akan digunakan browser untuk Hot Module Reloading
+            host: 'localhost',
             port: 5173,
         },
         watch: {
-            usePolling: true, // Kadang diperlukan di lingkungan Docker/WSL untuk deteksi perubahan file
+            usePolling: true,
         },
     },
 });
