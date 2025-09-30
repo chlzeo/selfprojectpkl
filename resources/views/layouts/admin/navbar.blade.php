@@ -53,8 +53,8 @@
                         {{ Auth::user()->name }} ({{ Auth::user()->role }})
                     </a>
 
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">
+                    <div class="dropdown-menu dropdown-menu-ends" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/profile">
                             {{ __('Profile') }}
                         </a>
 

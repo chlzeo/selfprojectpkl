@@ -56,9 +56,9 @@ Route::middleware(['auth'])->name('admin.')->group(function () {
     Route::resource('admin/testimoni', TestimoniController::class); // manajemen kategori
 
     // Rute profil user yang login
-    Route::get('admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('admin/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('admin/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // Route hanya untuk admin
